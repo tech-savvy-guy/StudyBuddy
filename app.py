@@ -1,6 +1,7 @@
 import streamlit as st
 
 from utils.ocr import get_text_from_image
+from utils.ocr import get_help_from_arctic
 
 from utils.quiz import get_quiz_data
 from utils.toast import get_random_toast
@@ -70,7 +71,7 @@ with st.expander("💡 Video Tutorial"):
 
 with st.form("user_input"):
     YOUTUBE_URL = st.text_input("Enter the YouTube video link:", value="https://www.youtube.com/watch?v=fMsmCxIEQr4")
-    submitted = st.form_submit_button("Craft my quiz!")
+    submitted = st.form_submit_button("Craft my quiz!", type="primary")
 
 if submitted or ('quiz_data_list' in st.session_state):
     if not YOUTUBE_URL:
@@ -138,26 +139,45 @@ What if you could go beyond the quiz and explore the video content in more detai
 \n- StudyBuddy will analyze the image and provide you with a detailed description of its contents.\n\
 \n- It's that simple! Let's dive in! 🚀        
          
-⚠️ Important: The image **must** have a decent resolution for the tool to work best.         
+⚠️ Important: The image **must** have a decent resolution for the tool to work best.
+
+📌 Here are two image examples for reference:
 """)
 
+col1, col2, _ = st.columns([1,1,2])
+
+with open("image-1.png", "rb") as file:
+    btn = col1.download_button(
+            label="Download image-1",
+            data=file,
+            file_name="image-1.png",
+            mime="image/png"
+        )
+
+with open("image-2.png", "rb") as file:
+    btn = col2.download_button(
+            label="Download image-2",
+            data=file,
+            file_name="image-2.png",
+            mime="image/png"
+        )
+        
 # Create a new form for image analysis
 with st.form("image_input"):
     image = st.file_uploader("Upload an image:", type=["jpg", "jpeg", "png"])
-    instructions = st.text_input("What would you like to do with the image?")
-    image_submit = st.form_submit_button("Analyze my image!")
+    instructions = st.text_input("What would you like to do with the image? (Optional)")
+    image_submit = st.form_submit_button("Analyze my image!", type="primary")
 
 if image_submit:
     if image is None:
-        st.info("Please provide a valid image file.")
+        st.error("Please provide a valid image file.")
         st.stop()
+
+    if instructions is None:
+        instructions = "Please provide a valid response based on the above text." 
 
     with st.spinner("Analyzing your image...🔍"):
         st.snow()
-
         image_data = image.getvalue()
-        
-
         st.image(image, caption="image.png", use_column_width=True)
-        st.write(get_text_from_image(image_data))
-
+        st.markdown(get_help_from_arctic(get_text_from_image(image_data), instructions))
