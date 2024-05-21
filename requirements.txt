@@ -1,5 +1,7 @@
 pytube
 streamlit
 langchain
+replicate
+transformers
 python-dotenv
 youtube_transcript_api
