@@ -28,6 +28,9 @@ if 'first_time' not in st.session_state:
     st.session_state.first_time = False
 
 with st.sidebar:
+
+    st.image("profile.png", use_column_width=True)
+
     st.header("👨‍💻 About Me")
     st.write("""
     Hey, my name's **Soham** and I'm a tech enthusiast. Driven by passion and a love for sharing knowledge, I've created this platform to make learning more interactive and fun.
@@ -65,10 +68,6 @@ Ever watched a YouTube video and wondered how well you understood its content? H
 Once you've input the details, voilà! Dive deep into questions crafted just for you, ensuring you've truly grasped the content of the video. Let's put your knowledge to the test! 
 """)
 
-with st.expander("💡 Video Tutorial"):
-    with st.spinner("Loading video.."):
-        st.video("https://youtu.be/yzBr3L2BIto", format="video/mp4", start_time=0)
-
 with st.form("user_input"):
     YOUTUBE_URL = st.text_input("Enter the YouTube video link:", value="https://www.youtube.com/watch?v=fMsmCxIEQr4")
     submitted = st.form_submit_button("Craft my quiz!", type="primary")
@@ -80,7 +79,6 @@ if submitted or ('quiz_data_list' in st.session_state):
         
     with st.spinner("Crafting your quiz...🤓"):
         if submitted:
-            st.snow()
             video_id = extract_video_id_from_url(YOUTUBE_URL)
             video_transcription = get_transcript_text(video_id)
             quiz_data_str = get_quiz_data(video_transcription)
@@ -181,3 +179,8 @@ if image_submit:
         image_data = image.getvalue()
         st.image(image, caption="image.png", use_column_width=True)
         st.markdown(get_help_from_arctic(get_text_from_image(image_data), instructions))
+
+st.title(":green[Video Demo 📸]", anchor=False)
+
+with st.spinner("Loading video.."):
+    st.video("https://youtu.be/yzBr3L2BIto", format="video/mp4", start_time=0)
