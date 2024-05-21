@@ -1,0 +1,4 @@
+pytube
+streamlit
+langchain
+youtube_transcript_api
