@@ -88,5 +88,6 @@ pyrightconfig.json
 Thumbs.db
 ehthumbs.db
 
-# Some custom files
+# Some custom files & folders
 example.py
+demo/

@@ -179,7 +179,7 @@ if image_submit:
         st.image(image, caption="image.png", use_column_width=True)
         st.markdown(get_help_from_arctic(get_text_from_image(image_data), instructions))
 
-# st.title(":green[Video Demo 📸]", anchor=False)
+st.title(":green[Video Demo 📸]", anchor=False)
 
-# with st.spinner("Loading video.."):
-#     st.video("https://youtu.be/yzBr3L2BIto", format="video/mp4", start_time=0)
+with st.spinner("Loading video.."):
+    st.video("https://youtu.be/Ogsy42VQvlA", format="video/mp4", start_time=0)
