@@ -1,5 +1,7 @@
 import streamlit as st
 
+from utils.ocr import get_text_from_image
+
 from utils.quiz import get_quiz_data
 from utils.toast import get_random_toast
 
@@ -152,6 +154,10 @@ if image_submit:
 
     with st.spinner("Analyzing your image...🔍"):
         st.snow()
-        st.image(image, caption="Uploaded Image", use_column_width=True)
-        st.write("Image analysis results:")
+
+        image_data = image.getvalue()
+        
+
+        st.image(image, caption="image.png", use_column_width=True)
+        st.write(get_text_from_image(image_data))
 
